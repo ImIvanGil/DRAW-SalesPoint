@@ -22,8 +22,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -33,25 +32,26 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name = "orders")
-public class Order implements Serializable {
+public class SaleOrder implements Serializable {
 
     @Id
+    @Column(name = "order_id")
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     private Long orderId;
-    
+
     @Column(name = "created_at")
     private Date createdAt;
-    
+
     @Column(name = "description")
     private String description;
-    
+
     @Column(name = "status")
     private String status;
 
-    @OneToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class)
     private User user;
-    
+
     public Long getOrderId() {
         return orderId;
     }

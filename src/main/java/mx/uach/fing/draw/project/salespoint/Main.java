@@ -16,6 +16,11 @@
  */
 package mx.uach.fing.draw.project.salespoint;
 
+import mx.uach.fing.draw.project.salespoint.model.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
 /**
  *
  * @author Luis Chávez Bustamante
@@ -23,6 +28,23 @@ package mx.uach.fing.draw.project.salespoint;
 public class Main {
     
     public static void main(String[] args) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         
+        Session session = sessionFactory.openSession();
+        
+        User user = new User();
+        user.setName("Luis");
+        user.setLastName("Chávez");
+        user.setNickname("luischavez");
+        user.setPassword("test");
+        user.setIsAdmin(true);
+        
+        Transaction transaction = session.beginTransaction();
+        
+        session.save(user);
+ 
+        transaction.commit();
+        
+        session.close();
     }
 }
