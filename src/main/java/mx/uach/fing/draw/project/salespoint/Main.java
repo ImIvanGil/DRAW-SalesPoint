@@ -20,15 +20,18 @@ import freemarker.template.Configuration;
 
 import mx.uach.fing.draw.project.salespoint.controller.AdminController;
 import mx.uach.fing.draw.project.salespoint.controller.HomeController;
+import mx.uach.fing.draw.project.salespoint.controller.OrderController;
 import mx.uach.fing.draw.project.salespoint.controller.UserController;
 import mx.uach.fing.draw.project.salespoint.filter.AdminFilter;
 import mx.uach.fing.draw.project.salespoint.filter.ErrorFilter;
+import mx.uach.fing.draw.project.salespoint.transform.JsonTransformer;
 
 import spark.template.freemarker.FreeMarkerEngine;
 
 import static spark.Spark.*;
 
 /**
+ * Clase principal.
  *
  * @author Luis Chávez Bustamante
  */
@@ -54,10 +57,14 @@ public class Main {
         Configuration configuration = new Configuration();
         configuration.setClassForTemplateLoading(Main.class, "/templates/");
 
+        // Maneja los errores de la sesion.
         before(ErrorFilter.CREATE_ERRORS);
         after(ErrorFilter.DELETE_ERRORS);
 
+        // Filtros para verificar la sesion del usuario.
         after("/admin", AdminFilter.LOGGED);
+        after("/orders", AdminFilter.LOGGED);
+        after("/create_order", AdminFilter.LOGGED);
 
         FreeMarkerEngine engine = new FreeMarkerEngine(configuration);
 
@@ -70,15 +77,15 @@ public class Main {
         // Ruta para registrar a un usuario.
         post("/do_signup", UserController::doSignup);
         // Ruta para mostrar las ordenes de compra del usuario.
-        get("/orders", null);
+        get("/orders", OrderController::orders, engine);
         // Ruta para crear una nueva orden.
-        post("/create_order", null);
+        post("/create_order", OrderController::createOrder);
         // Ruta para la seccion de administracion.
         get("/admin", AdminController::admin, engine);
         // Ruta (AJAX) para obtener la informacion de un pedido.
-        get("/order/:id", AdminController::updateOrderStatus);
+        get("/order/:id", OrderController::order, new JsonTransformer());
         // Ruta para actualizar el estado de un pedido.
-        get("/do_status/:id/:status", null);
+        get("/do_status/:id/:status", AdminController::updateOrderStatus);
     }
 
     /**
@@ -90,23 +97,5 @@ public class Main {
         Main main = new Main();
         main.initialize();
         main.routes();
-        /*SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        
-         Session session = sessionFactory.openSession();
-        
-         User user = new User();
-         user.setName("Luis");
-         user.setLastName("Chávez");
-         user.setNickname("luischavez");
-         user.setPassword("test");
-         user.setIsAdmin(true);
-        
-         Transaction transaction = session.beginTransaction();
-        
-         session.save(user);
- 
-         transaction.commit();
-        
-         session.close();*/
     }
 }
