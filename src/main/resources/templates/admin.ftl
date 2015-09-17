@@ -39,6 +39,7 @@
 					<th>Nombre</th>
 					<th>Apellido</th>
 					<th>Nick Name</th>
+					<th>Status</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -47,6 +48,7 @@
 	                <td>${order.getUser().getName()}</td>
 	                <td>${order.getUser().getLastName()}</td>
 	                <td>${order.getUser().getNickname()}</td>
+	                <td>${order.getStatus()}</td>
 	                <td>
 	                    <button type="button" class="btn btn-info btn-xs" onclick="load(${order.getOrderId()})">
 	                        Ver
