@@ -21,6 +21,8 @@ import freemarker.template.Configuration;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import mx.uach.fing.draw.project.salespoint.controller.HomeController;
+import mx.uach.fing.draw.project.salespoint.controller.UserController;
+import mx.uach.fing.draw.project.salespoint.filter.ErrorFilter;
 
 import static spark.Spark.*;
 
@@ -48,16 +50,16 @@ public class Main {
         Configuration configuration = new Configuration();
         configuration.setClassForTemplateLoading(Main.class, "/templates/");
 
+        before(new ErrorFilter.Before());
+
         // Ruta a la pagina principal.
         get("/", HomeController::index, new FreeMarkerEngine(configuration));
         // Ruta para autentificar al usuario.
-        post("/do_login", null);
+        post("/do_login", UserController::doLogin);
         // Ruta para terminar la sesion.
-        get("/do_logout", null);
-        // Ruta para mostrar el formulario de registro.
-        get("/signup", null);
+        get("/do_logout", UserController::doLogout);
         // Ruta para registrar a un usuario.
-        post("/do_signup", null);
+        post("/do_signup", UserController::doSignup);
         // Ruta para mostrar las ordenes de compra del usuario.
         get("/orders", null);
         // Ruta para crear una nueva orden.
