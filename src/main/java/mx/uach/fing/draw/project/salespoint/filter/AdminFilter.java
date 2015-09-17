@@ -14,25 +14,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package mx.uach.fing.draw.project.salespoint.controller;
+package mx.uach.fing.draw.project.salespoint.filter;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import spark.ModelAndView;
+import spark.Filter;
 import spark.Request;
 import spark.Response;
 
 /**
+ * Filtros para verificar la sesion del usuario.
  *
  * @author Luis Chávez Bustamante
  */
-public class HomeController {
-    
-    public static ModelAndView index(Request request, Response response) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("message", "Hola mundo!");
-        
-        return new ModelAndView(map, "index.ftl");
+public class AdminFilter {
+
+    public static final Logged LOGGED = new Logged();
+
+    private AdminFilter() {
+    }
+
+    /**
+     * Filtro para verificar que el usuario este logeado.
+     */
+    public static class Logged implements Filter {
+
+        @Override
+        public void handle(Request request, Response response) throws Exception {
+            Object user = request.session().attribute("user");
+            if (null == user) {
+                response.redirect("/");
+            }
+        }
     }
 }
