@@ -14,35 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package mx.uach.fing.draw.project.salespoint.filter;
+package mx.uach.fing.draw.project.salespoint.controller;
 
-import spark.Filter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import spark.Request;
-import spark.Response;
 
 /**
- * Filtros para verificar la sesion del usuario.
+ * Clase abstracta con metodos pre-definidos para manejar las variables de la
+ * vista.
  *
  * @author Luis Chávez Bustamante
  */
-public class AdminFilter {
+public abstract class Controller {
 
-    public static final Logged LOGGED = new Logged();
+    // Mapa con las variables a mostrar en la vista.
+    private final Map<String, Object> map = new HashMap<>();
 
-    private AdminFilter() {
+    protected void set(String key, Object value) {
+        map.put(key, value);
     }
 
-    /**
-     * Filtro para verificar que el usuario este logeado.
-     */
-    public static class Logged implements Filter {
-
-        @Override
-        public void handle(Request request, Response response) throws Exception {
-            Object user = request.session().attribute("user");
-            if (null == user) {
-                response.redirect("/");
-            }
-        }
+    protected Map<String, Object> values(Request request) {
+        map.put("session", request.session());
+        List<String> errors = request.session().attribute("errors");
+        map.put("errors", errors);
+        return map;
     }
 }

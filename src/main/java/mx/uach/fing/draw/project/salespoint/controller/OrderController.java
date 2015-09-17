@@ -17,9 +17,7 @@
 package mx.uach.fing.draw.project.salespoint.controller;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -42,7 +40,7 @@ import spark.Response;
  *
  * @author Brian Barron Diaz
  */
-public class OrderController {
+public class OrderController extends Controller {
 
     /**
      * Metodo para obtener los datos de compra.
@@ -51,7 +49,7 @@ public class OrderController {
      * @param response
      * @return Vista de las ordenes de compra.
      */
-    public static ModelAndView orders(Request request, Response response) {
+    public ModelAndView orders(Request request, Response response) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 
@@ -65,10 +63,9 @@ public class OrderController {
                                 order.getUser().getUserId()))
                 .collect(Collectors.toList());
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("orders", orders);
+        set("orders", orders);
 
-        return new ModelAndView(map, "user.ftl");
+        return new ModelAndView(values(request), "user.ftl");
     }
 
     /**
@@ -78,7 +75,7 @@ public class OrderController {
      * @param response
      * @return
      */
-    public static Object createOrder(Request request, Response response) {
+    public Object createOrder(Request request, Response response) {
         String description = request.queryParams("description");
 
         User user = request.session().attribute("user");
@@ -117,7 +114,7 @@ public class OrderController {
      * @param response
      * @return Orden de compra.
      */
-    public static Object order(Request request, Response response) {
+    public Object order(Request request, Response response) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 

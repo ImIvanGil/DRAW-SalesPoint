@@ -22,7 +22,6 @@ import mx.uach.fing.draw.project.salespoint.controller.AdminController;
 import mx.uach.fing.draw.project.salespoint.controller.HomeController;
 import mx.uach.fing.draw.project.salespoint.controller.OrderController;
 import mx.uach.fing.draw.project.salespoint.controller.UserController;
-import mx.uach.fing.draw.project.salespoint.filter.AdminFilter;
 import mx.uach.fing.draw.project.salespoint.filter.ErrorFilter;
 import mx.uach.fing.draw.project.salespoint.transform.JsonTransformer;
 
@@ -57,35 +56,37 @@ public class Main {
         Configuration configuration = new Configuration();
         configuration.setClassForTemplateLoading(Main.class, "/templates/");
 
+        // Motor de plantillas.
+        FreeMarkerEngine engine = new FreeMarkerEngine(configuration);
+
         // Maneja los errores de la sesion.
         before(ErrorFilter.CREATE_ERRORS);
         after(ErrorFilter.DELETE_ERRORS);
 
-        // Filtros para verificar la sesion del usuario.
-        after("/admin", AdminFilter.LOGGED);
-        after("/orders", AdminFilter.LOGGED);
-        after("/create_order", AdminFilter.LOGGED);
-
-        FreeMarkerEngine engine = new FreeMarkerEngine(configuration);
+        // Controladores.
+        AdminController adminController = new AdminController();
+        HomeController homeController = new HomeController();
+        OrderController orderController = new OrderController();
+        UserController userController = new UserController();
 
         // Ruta a la pagina principal.
-        get("/", HomeController::index, engine);
+        get("/", homeController::index, engine);
         // Ruta para autentificar al usuario.
-        post("/do_login", UserController::doLogin);
+        post("/do_login", userController::doLogin);
         // Ruta para terminar la sesion.
-        get("/do_logout", UserController::doLogout);
+        get("/do_logout", userController::doLogout);
         // Ruta para registrar a un usuario.
-        post("/do_signup", UserController::doSignup);
+        post("/do_signup", userController::doSignup);
         // Ruta para mostrar las ordenes de compra del usuario.
-        get("/orders", OrderController::orders, engine);
+        get("/orders", orderController::orders, engine);
         // Ruta para crear una nueva orden.
-        post("/create_order", OrderController::createOrder);
+        post("/create_order", orderController::createOrder);
         // Ruta para la seccion de administracion.
-        get("/admin", AdminController::admin, engine);
+        get("/admin", adminController::admin, engine);
         // Ruta (AJAX) para obtener la informacion de un pedido.
-        get("/order/:id", OrderController::order, new JsonTransformer());
+        get("/order/:id", orderController::order, new JsonTransformer());
         // Ruta para actualizar el estado de un pedido.
-        get("/do_status/:id/:status", AdminController::updateOrderStatus);
+        get("/do_status/:id/:status", adminController::updateOrderStatus);
     }
 
     /**
