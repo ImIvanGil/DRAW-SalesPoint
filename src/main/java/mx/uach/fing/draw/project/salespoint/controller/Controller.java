@@ -42,6 +42,7 @@ public abstract class Controller {
         List<String> errors = request.session().attribute("errors");
         request.session().removeAttribute("errors");
         map.put("errors", errors);
+        map.put("user", request.session().attribute("user"));
         return map;
     }
 }

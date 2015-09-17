@@ -7,6 +7,12 @@
 </head>
 <body>
 	<div class="container-fluid">
+                <a href="/do_logout">
+                    <span class="glyphicon glyphicon-log-out" ></span> Salir
+                </a>
+                <a href="/admin">
+                    <span class="glyphicon glyphicon-user" ></span> Admin
+                </a>
 		<#list errors as error>
 		<div class="alert alert-warning" role="alert">${error}</div>
 		</#list>

@@ -17,7 +17,21 @@
 						<li class="active"><a href="#">Home</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li>
+                                                <#if user??>
+                                                <li>
+							<a href="/do_logout">
+								<span class="glyphicon glyphicon-log-out" ></span> Salir
+							</a>
+						</li>
+                                                    <#if user.getIsAdmin()>
+                                                    <li>
+                                                        <a href="/admin">
+                                                                <span class="glyphicon glyphicon-user" ></span> Admin
+                                                        </a>
+                                                    </li>
+                                                    </#if>
+                                                <#else>
+                                                <li>
 							<a data-toggle="modal" data-target="#registrar">
 								<span class="glyphicon glyphicon-user" ></span> Registrate
 							</a>
@@ -27,6 +41,8 @@
 								<span class="glyphicon glyphicon-log-in"></span> Inicia Session
 							</a>
 						</li>
+                                                </#if>
+						
 					</ul>
 				</div>
 			</div>

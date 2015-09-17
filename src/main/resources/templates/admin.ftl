@@ -7,6 +7,9 @@
 </head>
 <body>
 	<div class="container-fluid">
+                <a href="/do_logout">
+                    <span class="glyphicon glyphicon-log-out" ></span> Salir
+                </a>
 		<#list errors as error>
 		<div class="alert alert-warning" role="alert">${error}</div>
 		</#list>
@@ -21,14 +24,18 @@
 					</tr>
 				</thead>
 			<tbody>
-				<tr>
-					<td>John</td>
-					<td>Doe</td>
-					<td>john@example.com</td>
-					<td>
-						<button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#liberarPedido">Open Modal</button>
-					</td>
-				</tr>
+                            <#list orders as order>
+                            <tr>
+                                <td>${order.getUser().getName()}</td>
+                                <td>${order.getUser().getLastName()}</td>
+                                <td>${order.getUser().getNickname()}</td>
+                                <td>
+                                    <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#liberarPedido">
+                                        Ver
+                                    </button>
+                                </td>
+                            </tr>
+                            </#list>
 			</tbody>
 		</table>
 		<!-- Modal crear -->
