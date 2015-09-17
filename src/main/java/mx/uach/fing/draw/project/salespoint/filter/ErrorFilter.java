@@ -42,4 +42,15 @@ public class ErrorFilter {
             request.session().attribute("errors", new ArrayList<>());
         }
     }
+
+    /**
+     * Filtro para borrar los errores al final.
+     */
+    public static class After implements Filter {
+
+        @Override
+        public void handle(Request request, Response response) throws Exception {
+            request.session().removeAttribute("errors");
+        }
+    }
 }

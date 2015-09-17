@@ -51,6 +51,7 @@ public class Main {
         configuration.setClassForTemplateLoading(Main.class, "/templates/");
 
         before(new ErrorFilter.Before());
+        after(new ErrorFilter.After());
 
         // Ruta a la pagina principal.
         get("/", HomeController::index, new FreeMarkerEngine(configuration));
