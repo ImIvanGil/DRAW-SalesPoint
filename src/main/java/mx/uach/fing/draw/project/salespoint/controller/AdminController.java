@@ -103,7 +103,7 @@ public class AdminController extends Controller {
             errors = true;
         }
 
-        if ("LIBERAR".equals(status)) {
+        if (!"LIBERAR".equals(status)) {
             errors = true;
         }
 
@@ -112,7 +112,7 @@ public class AdminController extends Controller {
             Session session = sessionFactory.openSession();
 
             SaleOrder saleOrder = (SaleOrder) session.createCriteria(SaleOrder.class)
-                    .add(Restrictions.eq("order_id", id))
+                    .add(Restrictions.eq("orderId", id))
                     .uniqueResult();
 
             Transaction transaction = session.beginTransaction();
