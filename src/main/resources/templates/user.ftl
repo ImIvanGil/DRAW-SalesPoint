@@ -41,11 +41,11 @@
     <div class="modal-content">
     <label for="name"></label>
     	<h3 name="name">Nuevo pedido</h3><hr>
-                <form class="form-horizontal" role="form" action="/create-order" method="POST">
+                <form class="form-horizontal" role="form" action="/create_order" method="POST">
 		    <div class="form-group">
 		      <label class="control-label col-sm-2" for="desc">Descripcion:</label><br>
 		      <div class="col-sm-10">          
-		        <textarea  class="form-control" name="desc" id="description" placeholder="Descripcion"></textarea>
+		        <textarea  class="form-control" name="description" id="description" placeholder="Descripcion"></textarea>
 		      </div>
 		    </div>
 		    <div class="form-group">        

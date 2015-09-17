@@ -39,16 +39,7 @@
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
-    <label for="name"></label>
-    	<h3 name="name">Liberar pedido</h3><hr>
-    	<form class="form-horizontal" role="form" action="/do-status" method="POST">
-		    <p align="center">Liberar Compra?</p>
-		    <div class="form-group">        
-		      <div class="col-sm-offset-2 col-sm-10" align="right">
-		        <button type="submit"  class="btn btn-danger">Liberar</button>
-		      </div>
-		    </div>
-		 </form>
+        <a href="/do_status/id/status">Liberar</a>
        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
