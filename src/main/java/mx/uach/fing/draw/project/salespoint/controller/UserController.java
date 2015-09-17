@@ -68,6 +68,7 @@ public class UserController {
                 .uniqueResult();
         
         if (null != user) {
+            request.session(true);
             request.session().attribute("user", user);
             response.redirect("/orders");
         } else {
