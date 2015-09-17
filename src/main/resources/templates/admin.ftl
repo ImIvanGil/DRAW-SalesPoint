@@ -40,11 +40,16 @@
     <!-- Modal content-->
     <div class="modal-content">
     <label for="name"></label>
-    	<h3 name="name">Nuevo pedido</h3><hr>
+    	<h3 name="name">Liberar pedido</h3><hr>
     	<form class="form-horizontal" role="form" action="/do-status" method="POST">
-		    <p>Liberar Compra?</p>
+		    <p align="center">Liberar Compra?</p>
+		    <div class="form-group">        
+		      <div class="col-sm-offset-2 col-sm-10" align="right">
+		        <button type="submit"  class="btn btn-danger">Liberar</button>
+		      </div>
+		    </div>
 		 </form>
-       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
