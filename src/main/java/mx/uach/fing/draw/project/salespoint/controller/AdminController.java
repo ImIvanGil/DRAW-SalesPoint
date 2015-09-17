@@ -38,6 +38,34 @@ import spark.Response;
 //Esta clase le agrega a la aplicacion todas las acciones que puede realizar un administrador
 public class AdminController extends Controller {
 
+    /**
+     * Crea la cuenta de administrador solo si no existe.
+     */
+    public void createDefaultAdminUser() {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        User admin = (User) session.createCriteria(User.class)
+                .add(Restrictions.eq("nickname", "admin"))
+                .uniqueResult();
+
+        if (null == admin) {
+            Transaction transaction = session.beginTransaction();
+
+            User user = new User();
+            user.setName("ADMIN");
+            user.setLastName("ADMIN");
+            user.setNickname("ADMIN");
+            user.setPassword("ADMIN");
+            user.setIsAdmin(true);
+
+            session.save(user);
+
+            transaction.commit();
+            session.close();
+        }
+    }
+
     //Este metodo le muestra las ordenes de los usuarios al administrador
     public ModelAndView admin(Request request, Response response) {
         User user = request.session().attribute("user");
