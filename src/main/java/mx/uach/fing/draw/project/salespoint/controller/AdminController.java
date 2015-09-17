@@ -37,8 +37,11 @@ import spark.Response;
  * 
  * @author Luis Chávez Bustamante
  */
-public class AdminController {
 
+//Esta clase le agrega a la aplicacion todas las acciones que puede realizar un administrador
+public class AdminController {
+   
+    //Este metodo le muestra las ordenes de los usuarios al administrador
     public static ModelAndView admin(Request request, Response response) {
         User user = request.session().attribute("user");
 
@@ -57,7 +60,8 @@ public class AdminController {
 
         return new ModelAndView(map, "admin.ftl");
     }
-
+    
+    //Este metodo le permite al administrador liberar los pedidos
     public static Object updateOrderStatus(Request request, Response response) {
         User user = request.session().attribute("user");
 
