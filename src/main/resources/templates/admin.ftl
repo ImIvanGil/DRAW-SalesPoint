@@ -6,50 +6,69 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 </head>
 <body>
-	<div class="container-fluid">
-                <a href="/do_logout">
+	
+	<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">DRAW</a>
+	    </div>
+	    <div>
+	      <ul class="nav navbar-nav">
+	        <li class="active"><a href="#">Home</a></li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	        <li>
+	        	<a href="/do_logout">
                     <span class="glyphicon glyphicon-log-out" ></span> Salir
                 </a>
+            </li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+	
+		
 		<#list errors as error>
 		<div class="alert alert-warning" role="alert">${error}</div>
 		</#list>
 		<h2>Compras</h2>
-		<p>Compras totales:</p>            
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>Nombre</th>
-						<th>Apellido</th>
-						<th>Nick Name</th>
-					</tr>
-				</thead>
+		<div>Compras totales:</div>            
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Apellido</th>
+					<th>Nick Name</th>
+				</tr>
+			</thead>
 			<tbody>
-                            <#list orders as order>
-                            <tr>
-                                <td>${order.getUser().getName()}</td>
-                                <td>${order.getUser().getLastName()}</td>
-                                <td>${order.getUser().getNickname()}</td>
-                                <td>
-                                    <button type="button" class="btn btn-info btn-xs" onclick="load(${order.getOrderId()})">
-                                        Ver
-                                    </button>
-                                </td>
-                            </tr>
-                            </#list>
+	        <#list orders as order>
+	            <tr>
+	                <td>${order.getUser().getName()}</td>
+	                <td>${order.getUser().getLastName()}</td>
+	                <td>${order.getUser().getNickname()}</td>
+	                <td>
+	                    <button type="button" class="btn btn-info btn-xs" onclick="load(${order.getOrderId()})">
+	                        Ver
+	                    </button>
+	                </td>
+	            </tr>
+	        </#list>
 			</tbody>
 		</table>
+
 		<!-- Modal crear -->
 		<div id="liberarPedido" class="modal fade" role="dialog">
 			<div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div id="order" class="modal-content">
-                                <h2 id="order_date"></h2>
-                                <p id="order_number"></p>
-                                <p id="order_user"></p>
-                                <p id="order_description"></p>
-                                <a id="order_status" class="btn btn-primary" href="#">Liberar</a>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
+                <!-- Modal content-->
+                <div id="order" class="modal-content " style="padding:1cm">
+                    <h3 align="center">Creado el: <b> <div id="order_date"></div></b></h3> <hr>
+                    Id: <b><div id="order_number"></div></b>
+                    Nombre cliente: <b><div id="order_user"></div></b>
+                    Descripcion: <b><div id="order_description"></div></b><br>
+                    <a id="order_status" class="btn btn-primary" href="#">Liberar</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
 			</div>
 		</div>
 	</div>
