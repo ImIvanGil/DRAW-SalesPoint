@@ -6,13 +6,29 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 </head>
 <body>
-	<div class="container-fluid">
-                <a href="/do_logout">
+         <nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">DRAW</a>
+	    </div>
+	    <div>
+	      <ul class="nav navbar-nav">
+	        <li class="active"><a href="#">Home</a></li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	        <li>
+	        	<a href="/do_logout">
                     <span class="glyphicon glyphicon-log-out" ></span> Salir
                 </a>
-                <a href="/admin">
-                    <span class="glyphicon glyphicon-user" ></span> Admin
-                </a>
+                </li>
+
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+
+	<div class="container-fluid">
+                
 		<#list errors as error>
 		<div class="alert alert-warning" role="alert">${error}</div>
 		</#list>
