@@ -16,35 +16,86 @@
  */
 package mx.uach.fing.draw.project.salespoint;
 
-import mx.uach.fing.draw.project.salespoint.model.User;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import freemarker.template.Configuration;
+
+import spark.template.freemarker.FreeMarkerEngine;
+
+import mx.uach.fing.draw.project.salespoint.controller.HomeController;
+
+import static spark.Spark.*;
 
 /**
  *
  * @author Luis Chávez Bustamante
  */
 public class Main {
-    
+
+    /**
+     * Configuracion global de la aplicacion.
+     */
+    public void initialize() {
+        // Puerto que utiliza la aplicacion.
+        port(80);
+    }
+
+    /**
+     * Configuracion de las rutas de la aplicacion.
+     *
+     * verbos: - GET - POST - PUT - DELETE
+     */
+    public void routes() {
+        // Configuracion de freemarker.
+        Configuration configuration = new Configuration();
+        configuration.setClassForTemplateLoading(Main.class, "/templates/");
+
+        // Ruta a la pagina principal.
+        get("/", HomeController::index, new FreeMarkerEngine(configuration));
+        // Ruta para autentificar al usuario.
+        post("/do_login", null);
+        // Ruta para terminar la sesion.
+        get("/do_logout", null);
+        // Ruta para mostrar el formulario de registro.
+        get("/signup", null);
+        // Ruta para registrar a un usuario.
+        post("/do_signup", null);
+        // Ruta para mostrar las ordenes de compra del usuario.
+        get("/orders", null);
+        // Ruta para crear una nueva orden.
+        post("/create_order", null);
+        // Ruta para la seccion de administracion.
+        get("/admin", null);
+        // Ruta (AJAX) para obtener la informacion de un pedido.
+        get("/order/:id", null);
+        // Ruta para actualizar el estado de un pedido.
+        get("/do_status/:id/:status", null);
+    }
+
+    /**
+     * Punto de entrada de la aplicacion.
+     *
+     * @param args argumentos para inicializar la aplicacion.
+     */
     public static void main(String[] args) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Main main = new Main();
+        main.initialize();
+        main.routes();
+        /*SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         
-        Session session = sessionFactory.openSession();
+         Session session = sessionFactory.openSession();
         
-        User user = new User();
-        user.setName("Luis");
-        user.setLastName("Chávez");
-        user.setNickname("luischavez");
-        user.setPassword("test");
-        user.setIsAdmin(true);
+         User user = new User();
+         user.setName("Luis");
+         user.setLastName("Chávez");
+         user.setNickname("luischavez");
+         user.setPassword("test");
+         user.setIsAdmin(true);
         
-        Transaction transaction = session.beginTransaction();
+         Transaction transaction = session.beginTransaction();
         
-        session.save(user);
+         session.save(user);
  
-        transaction.commit();
+         transaction.commit();
         
-        session.close();
+         session.close();*/
     }
 }
