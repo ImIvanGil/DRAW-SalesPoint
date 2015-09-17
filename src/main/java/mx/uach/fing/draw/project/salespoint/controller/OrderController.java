@@ -118,12 +118,10 @@ public class OrderController extends Controller {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 
-        String id = request.params("id");
-        User user = request.session().attribute("user");
+        Long id = Long.valueOf(request.params("id"));
 
         SaleOrder order = (SaleOrder) session.createCriteria(SaleOrder.class)
-                .add(Restrictions.eq("order_id", id))
-                .add(Restrictions.eq("user_user_id", user.getUserId()))
+                .add(Restrictions.eq("orderId", id))
                 .uniqueResult();
 
         return order;
