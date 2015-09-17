@@ -109,6 +109,7 @@ public class UserController extends Controller {
             user.setLastName(lastName);
             user.setNickname(nickname);
             user.setPassword(password);
+            user.setIsAdmin(false);
 
             session.save(user);
 
@@ -117,7 +118,7 @@ public class UserController extends Controller {
 
             doLogin(request, response);
         } else {
-            response.redirect("/do_signup");
+            response.redirect("/");
         }
 
         return null;

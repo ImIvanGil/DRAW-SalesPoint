@@ -40,7 +40,7 @@ public class UserValidator extends Validator {
      * @param name nombre del usuario.
      */
     public void validateUserName(String name) {
-        if (null == name || name.isEmpty() || 50 > name.length()) {
+        if (null == name || name.isEmpty() || 50 < name.length()) {
             error("El nombre no es valido.");
         } else {
             for (char c : name.toCharArray()) {
@@ -57,7 +57,7 @@ public class UserValidator extends Validator {
      * @param lastName apellido del usuario.
      */
     public void validateUserLastName(String lastName) {
-        if (null == lastName || lastName.isEmpty() || 50 > lastName.length()) {
+        if (null == lastName || lastName.isEmpty() || 50 < lastName.length()) {
             error("El apellido no es valido.");
         } else {
             for (char c : lastName.toCharArray()) {
