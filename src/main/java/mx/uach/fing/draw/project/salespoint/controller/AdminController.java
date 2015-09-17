@@ -53,10 +53,10 @@ public class AdminController extends Controller {
             Transaction transaction = session.beginTransaction();
 
             User user = new User();
-            user.setName("ADMIN");
-            user.setLastName("ADMIN");
-            user.setNickname("ADMIN");
-            user.setPassword("ADMIN");
+            user.setName("admin");
+            user.setLastName("admin");
+            user.setNickname("admin");
+            user.setPassword("admin");
             user.setIsAdmin(true);
 
             session.save(user);

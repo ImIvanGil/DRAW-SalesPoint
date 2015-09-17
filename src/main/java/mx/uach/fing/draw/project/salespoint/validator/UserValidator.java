@@ -16,7 +16,12 @@
  */
 package mx.uach.fing.draw.project.salespoint.validator;
 
+import mx.uach.fing.draw.project.salespoint.HibernateUtil;
 import mx.uach.fing.draw.project.salespoint.model.User;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+
 import spark.Session;
 
 /**
@@ -66,6 +71,18 @@ public class UserValidator extends Validator {
                     error("El apellido solo puede contener letras.");
                 }
             }
+        }
+    }
+
+    public void validateNickname(String nickname) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        org.hibernate.Session session = sessionFactory.openSession();
+
+        User user = (User) session.createCriteria(User.class)
+                .add(Restrictions.eq("nickname", nickname))
+                .uniqueResult();
+        if (null != user) {
+            error("El usuario ya existe.");
         }
     }
 
