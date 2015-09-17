@@ -18,11 +18,13 @@ package mx.uach.fing.draw.project.salespoint;
 
 import freemarker.template.Configuration;
 
-import spark.template.freemarker.FreeMarkerEngine;
-
+import mx.uach.fing.draw.project.salespoint.controller.AdminController;
 import mx.uach.fing.draw.project.salespoint.controller.HomeController;
 import mx.uach.fing.draw.project.salespoint.controller.UserController;
+import mx.uach.fing.draw.project.salespoint.filter.AdminFilter;
 import mx.uach.fing.draw.project.salespoint.filter.ErrorFilter;
+
+import spark.template.freemarker.FreeMarkerEngine;
 
 import static spark.Spark.*;
 
@@ -36,6 +38,8 @@ public class Main {
      * Configuracion global de la aplicacion.
      */
     public void initialize() {
+        // Ruta de los archivos estaticos.
+        staticFileLocation("/");
         // Puerto que utiliza la aplicacion.
         port(80);
     }
@@ -50,11 +54,15 @@ public class Main {
         Configuration configuration = new Configuration();
         configuration.setClassForTemplateLoading(Main.class, "/templates/");
 
-        before(new ErrorFilter.Before());
-        after(new ErrorFilter.After());
+        before(ErrorFilter.CREATE_ERRORS);
+        after(ErrorFilter.DELETE_ERRORS);
+
+        after("/admin", AdminFilter.LOGGED);
+
+        FreeMarkerEngine engine = new FreeMarkerEngine(configuration);
 
         // Ruta a la pagina principal.
-        get("/", HomeController::index, new FreeMarkerEngine(configuration));
+        get("/", HomeController::index, engine);
         // Ruta para autentificar al usuario.
         post("/do_login", UserController::doLogin);
         // Ruta para terminar la sesion.
@@ -66,9 +74,9 @@ public class Main {
         // Ruta para crear una nueva orden.
         post("/create_order", null);
         // Ruta para la seccion de administracion.
-        get("/admin", null);
+        get("/admin", AdminController::admin, engine);
         // Ruta (AJAX) para obtener la informacion de un pedido.
-        get("/order/:id", null);
+        get("/order/:id", AdminController::updateOrderStatus);
         // Ruta para actualizar el estado de un pedido.
         get("/do_status/:id/:status", null);
     }

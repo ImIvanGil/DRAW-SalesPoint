@@ -33,6 +33,6 @@ public class HomeController {
         Map<String, Object> map = new HashMap<>();
         map.put("message", "Hola mundo!");
         
-        return new ModelAndView(map, "hello.ftl");
+        return new ModelAndView(map, "index.ftl");
     }
 }

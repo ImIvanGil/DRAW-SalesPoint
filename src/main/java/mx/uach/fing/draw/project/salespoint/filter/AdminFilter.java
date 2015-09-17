@@ -16,46 +16,33 @@
  */
 package mx.uach.fing.draw.project.salespoint.filter;
 
-import java.util.ArrayList;
-
 import spark.Filter;
 import spark.Request;
 import spark.Response;
 
 /**
- * Filtros para manejar los errores de los formularios.
+ * Filtros para verificar la sesion del usuario.
  *
  * @author Luis Chávez Bustamante
  */
-public class ErrorFilter {
+public class AdminFilter {
 
-    public static final CreateErrors CREATE_ERRORS = new CreateErrors();
-    public static final DeleteErrors DELETE_ERRORS = new DeleteErrors();
+    public static final Logged LOGGED = new Logged();
 
-    private ErrorFilter() {
+    private AdminFilter() {
     }
 
     /**
-     * Filtro para crear un arreglo de errores.
+     * Filtro para verificar que el usuario este logeado.
      */
-    public static class CreateErrors implements Filter {
+    public static class Logged implements Filter {
 
         @Override
-        public void handle(Request request, Response response)
-                throws Exception {
-            request.session().attribute("errors", new ArrayList<>());
-        }
-    }
-
-    /**
-     * Filtro para borrar los errores al final.
-     */
-    public static class DeleteErrors implements Filter {
-
-        @Override
-        public void handle(Request request, Response response)
-                throws Exception {
-            request.session().removeAttribute("errors");
+        public void handle(Request request, Response response) throws Exception {
+            Object user = request.session().attribute("user");
+            if (null == user) {
+                response.redirect("/");
+            }
         }
     }
 }
