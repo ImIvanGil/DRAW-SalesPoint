@@ -43,35 +43,35 @@
 	        	<button type="button" class="close" data-dismiss="modal">&times;</button>
 	        	<h4 class="modal-title">Registrar</h4>
 	        </div>
-	     	<form class="form-horizontal" role="form">
+	     	<form class="form-horizontal" role="form" action="/do-login" method="POST">
 			    <div class="form-group">
 			      <label class="control-label col-sm-2" for="nombre">Nombre:</label>
 			      <div class="col-sm-10">
-			        <input type="text" class="form-control" id="nombre" placeholder="Introduce tu nombre">
+			        <input type="text" class="form-control" id="nombre" name="name" placeholder="Introduce tu nombre">
 			      </div>
 			    </div>
 			    <div class="form-group">
 			      <label class="control-label col-sm-2" for="apellido">Apellido:</label>
 			      <div class="col-sm-10">
-			        <input type="text" class="form-control" id="apellido" placeholder="Introduce tu apellido">
+			        <input type="text" class="form-control" id="apellido" name="last_name" placeholder="Introduce tu apellido">
 			      </div>
 			    </div>
 			     <div class="form-group">
 			      <label class="control-label col-sm-2" for="nickName">Nick Name:</label>
 			      <div class="col-sm-10">
-			        <input type="text" class="form-control" id="nickName" placeholder="Nick name">
+			        <input type="text" class="form-control" id="nickName" name="nickname" placeholder="Nick name">
 			      </div>
 			    </div>
 			    <div class="form-group">
 			      <label class="control-label col-sm-2" for="pwd">Password:</label>
 			      <div class="col-sm-10">          
-			        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+			        <input type="password" class="form-control" id="pwd" name="password" placeholder="Enter password">
 			      </div>
 			    </div>
 			    <div class="form-group">
 			      <label class="control-label col-sm-2" for="re-pwd">Confirm Password:</label>
 			      <div class="col-sm-10">          
-			        <input type="password" class="form-control" id="re-pwd" placeholder="Enter password">
+			        <input type="password" class="form-control" id="re-pwd" name="confirm_password" placeholder="Confirm password">
 			      </div>
 			    </div>
 			    <div class="form-group">        
@@ -98,20 +98,19 @@
 		        <button type="button" class="close" data-dismiss="modal">&times;</button>
 		        <h4 class="modal-title">Inicia Session</h4>
 		      </div>
-		  	  <form class="form-horizontal" role="form">
+		  	  <form class="form-horizontal" role="form" action="/do-signup" method="POST">
 			     <div class="form-group">
 			      <label class="control-label col-sm-2" for="nickName">Nick Name:</label>
 			      <div class="col-sm-10">
-			        <input type="text" class="form-control" id="nickName" placeholder="Nick name">
+			        <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Nick name">
 			      </div>
 			    </div>
 			    <div class="form-group">
 			      <label class="control-label col-sm-2" for="pwd">Password:</label>
 			      <div class="col-sm-10">          
-			        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+			        <input type="password" class="form-control" name="password" id="pwd" placeholder="Enter password">
 			      </div>
 			    </div>
-			    
 			    <div class="form-group">        
 			      <div class="col-sm-offset-2 col-sm-10">
 			        <button type="submit" class="btn btn-default">Iniciar Session</button>
