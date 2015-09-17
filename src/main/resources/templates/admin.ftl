@@ -14,7 +14,7 @@
 				</div>
 				<div>
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">Home</a></li>
+						<li class="active"><a href="/orders">Orders</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
                                                 <#if user??>

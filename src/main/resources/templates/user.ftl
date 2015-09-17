@@ -12,9 +12,7 @@
 					<a class="navbar-brand" href="#">DRAW</a>
 				</div>
 				<div>
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">Home</a></li>
-					</ul>
+					
 					<ul class="nav navbar-nav navbar-right">
                                                 <#if user??>
                                                 <li>
