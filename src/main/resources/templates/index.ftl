@@ -7,9 +7,6 @@
 </head>
 <body>
 	<div class="container-fluid">
-		<#list errors as error>
-		<div class="alert alert-warning" role="alert">${error}</div>
-		</#list>
 		<nav class="navbar navbar-inverse">
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -34,6 +31,9 @@
 				</div>
 			</div>
 		</nav>
+                <#list errors as error>
+		<div class="alert alert-warning" role="alert">${error}</div>
+		</#list>
 		<div class="jumbotron" align="center">
 			<h1>
 				<span class="glyphicon glyphicon-shopping-cart"></span>SALES POINT

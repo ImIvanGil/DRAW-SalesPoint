@@ -16,18 +16,19 @@
  */
 package mx.uach.fing.draw.project.salespoint.validator;
 
+import mx.uach.fing.draw.project.salespoint.model.User;
 import spark.Session;
 
 /**
  * Validador para el modelo de usuario.
- * 
+ *
  * @author Luis Chávez Bustamante
  */
 public class UserValidator extends Validator {
 
     /**
      * Constructor por defecto.
-     * 
+     *
      * @param session sesion de la aplicacion.
      */
     public UserValidator(Session session) {
@@ -36,7 +37,7 @@ public class UserValidator extends Validator {
 
     /**
      * Valida el nombre del usuario.
-     * 
+     *
      * @param name nombre del usuario.
      */
     public void validateUserName(String name) {
@@ -53,7 +54,7 @@ public class UserValidator extends Validator {
 
     /**
      * Valida el apellido del usuario.
-     * 
+     *
      * @param lastName apellido del usuario.
      */
     public void validateUserLastName(String lastName) {
@@ -70,13 +71,24 @@ public class UserValidator extends Validator {
 
     /**
      * Valida la contraseña del usuario.
-     * 
+     *
      * @param password contraseña del usuario.
      * @param confirmPassword confirmacion de la contraseña.
      */
     public void validatePassword(String password, String confirmPassword) {
         if (!password.equals(confirmPassword)) {
             error("Las contraseñas nos coinciden.");
+        }
+    }
+
+    /**
+     * Valilda que el usuario exista.
+     *
+     * @param user usuario a validar.
+     */
+    public void validateUser(User user) {
+        if (null == user) {
+            error("El usuario no existe.");
         }
     }
 }

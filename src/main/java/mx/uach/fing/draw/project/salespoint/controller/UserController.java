@@ -67,6 +67,9 @@ public class UserController extends Controller {
                 .add(Restrictions.eq("password", password))
                 .uniqueResult();
 
+        UserValidator validator = new UserValidator(request.session());
+        validator.validateUser(user);
+
         if (null != user) {
             request.session(true);
             request.session().attribute("user", user);

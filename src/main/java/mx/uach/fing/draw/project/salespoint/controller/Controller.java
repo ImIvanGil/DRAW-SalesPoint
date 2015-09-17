@@ -40,6 +40,7 @@ public abstract class Controller {
     protected Map<String, Object> values(Request request) {
         map.put("session", request.session());
         List<String> errors = request.session().attribute("errors");
+        request.session().removeAttribute("errors");
         map.put("errors", errors);
         return map;
     }

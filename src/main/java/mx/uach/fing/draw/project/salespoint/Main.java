@@ -61,7 +61,6 @@ public class Main {
 
         // Maneja los errores de la sesion.
         before(ErrorFilter.CREATE_ERRORS);
-        after(ErrorFilter.DELETE_ERRORS);
 
         // Controladores.
         AdminController adminController = new AdminController();

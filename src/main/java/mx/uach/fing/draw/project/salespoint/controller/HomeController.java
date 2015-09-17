@@ -27,8 +27,6 @@ import spark.Response;
 public class HomeController extends Controller {
 
     public ModelAndView index(Request request, Response response) {
-        set("message", "Hola mundo!");
-
         return new ModelAndView(values(request), "index.ftl");
     }
 }
