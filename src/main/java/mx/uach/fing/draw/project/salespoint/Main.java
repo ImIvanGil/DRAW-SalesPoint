@@ -67,6 +67,9 @@ public class Main {
         HomeController homeController = new HomeController();
         OrderController orderController = new OrderController();
         UserController userController = new UserController();
+        
+        // Crea la cuenta de administrador.
+        adminController.createDefaultAdminUser();
 
         // Ruta a la pagina principal.
         get("/", homeController::index, engine);
