@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import mx.uach.fing.draw.project.salespoint.HibernateUtil;
 import mx.uach.fing.draw.project.salespoint.model.SaleOrder;
@@ -37,14 +39,14 @@ import spark.Response;
 
 /**
  * Controlador para las ordenes de compra.
- * 
+ *
  * @author Brian Barron Diaz
  */
 public class OrderController {
 
     /**
      * Metodo para obtener los datos de compra.
-     * 
+     *
      * @param request
      * @param response
      * @return Vista de las ordenes de compra.
@@ -56,8 +58,12 @@ public class OrderController {
         User user = request.session().attribute("user");
 
         List<SaleOrder> orders = session.createCriteria(SaleOrder.class)
-                .add(Restrictions.eq("user_user_id", user.getUserId()))
                 .list();
+
+        orders = orders.stream()
+                .filter((order) -> Objects.equals(user.getUserId(),
+                                order.getUser().getUserId()))
+                .collect(Collectors.toList());
 
         Map<String, Object> map = new HashMap<>();
         map.put("orders", orders);
@@ -67,10 +73,10 @@ public class OrderController {
 
     /**
      * Metodo para crear una orden de compra.
-     * 
+     *
      * @param request
      * @param response
-     * @return 
+     * @return
      */
     public static Object createOrder(Request request, Response response) {
         String description = request.queryParams("description");
@@ -106,7 +112,7 @@ public class OrderController {
 
     /**
      * Metodo para obtener una orden de compra.
-     * 
+     *
      * @param request
      * @param response
      * @return Orden de compra.

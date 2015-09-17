@@ -31,6 +31,7 @@ import spark.template.freemarker.FreeMarkerEngine;
 import static spark.Spark.*;
 
 /**
+ * Clase principal.
  *
  * @author Luis Chávez Bustamante
  */
@@ -96,23 +97,5 @@ public class Main {
         Main main = new Main();
         main.initialize();
         main.routes();
-        /*SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        
-         Session session = sessionFactory.openSession();
-        
-         User user = new User();
-         user.setName("Luis");
-         user.setLastName("Chávez");
-         user.setNickname("luischavez");
-         user.setPassword("test");
-         user.setIsAdmin(true);
-        
-         Transaction transaction = session.beginTransaction();
-        
-         session.save(user);
- 
-         transaction.commit();
-        
-         session.close();*/
     }
 }
