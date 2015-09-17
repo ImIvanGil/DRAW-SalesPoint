@@ -56,7 +56,7 @@ public class UserController extends Controller {
      * @return
      */
     public Object doLogin(Request request, Response response) {
-        String nickname = request.queryParams("nickname");
+        String nickname = request.queryParams("nickname").toLowerCase();
         String password = request.queryParams("password");
 
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -91,7 +91,7 @@ public class UserController extends Controller {
     public Object doSignup(Request request, Response response) {
         String name = request.queryParams("name");
         String lastName = request.queryParams("last_name");
-        String nickname = request.queryParams("nickname");
+        String nickname = request.queryParams("nickname").toLowerCase();
         String password = request.queryParams("password");
         String confirmPassword = request.queryParams("confirm_password");
 
@@ -99,6 +99,7 @@ public class UserController extends Controller {
 
         validator.validateUserName(name);
         validator.validateUserLastName(lastName);
+        validator.validateNickname(nickname);
         validator.validatePassword(password, confirmPassword);
 
         if (!validator.error()) {
