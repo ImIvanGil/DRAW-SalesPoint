@@ -15,9 +15,9 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Nick Name</th>
       </tr>
     </thead>
     <tbody>
@@ -39,6 +39,8 @@
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
+    <label for="name"></label>
+    	<h3 name="name">Nuevo pedido</h3><hr>
 		    <div class="form-group">
 		      <label class="control-label col-sm-2" for="desc">Descripcion:</label><br>
 		      <div class="col-sm-10">          
