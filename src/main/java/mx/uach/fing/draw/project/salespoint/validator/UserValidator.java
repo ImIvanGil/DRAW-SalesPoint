@@ -16,18 +16,19 @@
  */
 package mx.uach.fing.draw.project.salespoint.validator;
 
+import mx.uach.fing.draw.project.salespoint.model.User;
 import spark.Session;
 
 /**
  * Validador para el modelo de usuario.
- * 
+ *
  * @author Luis Chávez Bustamante
  */
 public class UserValidator extends Validator {
 
     /**
      * Constructor por defecto.
-     * 
+     *
      * @param session sesion de la aplicacion.
      */
     public UserValidator(Session session) {
@@ -36,11 +37,11 @@ public class UserValidator extends Validator {
 
     /**
      * Valida el nombre del usuario.
-     * 
+     *
      * @param name nombre del usuario.
      */
     public void validateUserName(String name) {
-        if (null == name || name.isEmpty() || 50 > name.length()) {
+        if (null == name || name.isEmpty() || 50 < name.length()) {
             error("El nombre no es valido.");
         } else {
             for (char c : name.toCharArray()) {
@@ -53,11 +54,11 @@ public class UserValidator extends Validator {
 
     /**
      * Valida el apellido del usuario.
-     * 
+     *
      * @param lastName apellido del usuario.
      */
     public void validateUserLastName(String lastName) {
-        if (null == lastName || lastName.isEmpty() || 50 > lastName.length()) {
+        if (null == lastName || lastName.isEmpty() || 50 < lastName.length()) {
             error("El apellido no es valido.");
         } else {
             for (char c : lastName.toCharArray()) {
@@ -70,13 +71,24 @@ public class UserValidator extends Validator {
 
     /**
      * Valida la contraseña del usuario.
-     * 
+     *
      * @param password contraseña del usuario.
      * @param confirmPassword confirmacion de la contraseña.
      */
     public void validatePassword(String password, String confirmPassword) {
         if (!password.equals(confirmPassword)) {
             error("Las contraseñas nos coinciden.");
+        }
+    }
+
+    /**
+     * Valilda que el usuario exista.
+     *
+     * @param user usuario a validar.
+     */
+    public void validateUser(User user) {
+        if (null == user) {
+            error("El usuario no existe.");
         }
     }
 }

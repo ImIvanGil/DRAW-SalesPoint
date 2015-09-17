@@ -50,6 +50,7 @@ public abstract class Validator {
     protected void error(String message) {
         List<String> errors = session.attribute("errors");
         errors.add(message);
+        session.attribute("errors", errors);
         error = true;
     }
 

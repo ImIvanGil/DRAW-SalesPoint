@@ -17,6 +17,7 @@
 package mx.uach.fing.draw.project.salespoint.filter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import spark.Filter;
 import spark.Request;
@@ -30,7 +31,6 @@ import spark.Response;
 public class ErrorFilter {
 
     public static final CreateErrors CREATE_ERRORS = new CreateErrors();
-    public static final DeleteErrors DELETE_ERRORS = new DeleteErrors();
 
     private ErrorFilter() {
     }
@@ -43,19 +43,10 @@ public class ErrorFilter {
         @Override
         public void handle(Request request, Response response)
                 throws Exception {
-            request.session().attribute("errors", new ArrayList<>());
-        }
-    }
-
-    /**
-     * Filtro para borrar los errores al final.
-     */
-    public static class DeleteErrors implements Filter {
-
-        @Override
-        public void handle(Request request, Response response)
-                throws Exception {
-            request.session().removeAttribute("errors");
+            List<String> errors = request.session().attribute("errors");
+            if (null == errors) {
+                request.session().attribute("errors", new ArrayList<>());
+            }
         }
     }
 }

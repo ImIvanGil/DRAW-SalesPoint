@@ -30,43 +30,46 @@ import spark.Response;
 
 /**
  * Controlador para manejar el modelo de Usuario.
- * 
+ *
  * @author Luis Chávez Bustamante
  */
-public class UserController {
-    
+public class UserController extends Controller {
+
     /**
      * Metodo para cerrar la sesion del usuarios.
-     * 
+     *
      * @param request
      * @param response
-     * @return 
+     * @return
      */
-    public static Object doLogout(Request request, Response response) {
+    public Object doLogout(Request request, Response response) {
         request.session().removeAttribute("user");
         response.redirect("/");
         return null;
     }
-    
+
     /**
      * Metodo para inicial la sesion del usuario.
-     * 
+     *
      * @param request
      * @param response
-     * @return 
+     * @return
      */
-    public static Object doLogin(Request request, Response response) {
+    public Object doLogin(Request request, Response response) {
         String nickname = request.queryParams("nickname");
         String password = request.queryParams("password");
-        
+
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
-        
+
         User user = (User) session.createCriteria(User.class)
                 .add(Restrictions.eq("nickname", nickname))
                 .add(Restrictions.eq("password", password))
                 .uniqueResult();
-        
+
+        UserValidator validator = new UserValidator(request.session());
+        validator.validateUser(user);
+
         if (null != user) {
             request.session(true);
             request.session().attribute("user", user);
@@ -74,18 +77,18 @@ public class UserController {
         } else {
             response.redirect("/");
         }
-        
+
         return null;
     }
 
     /**
      * Metodo para registrar a un usuario.
-     * 
+     *
      * @param request
      * @param response
-     * @return 
+     * @return
      */
-    public static Object doSignup(Request request, Response response) {
+    public Object doSignup(Request request, Response response) {
         String name = request.queryParams("name");
         String lastName = request.queryParams("last_name");
         String nickname = request.queryParams("nickname");
@@ -109,15 +112,16 @@ public class UserController {
             user.setLastName(lastName);
             user.setNickname(nickname);
             user.setPassword(password);
-            
+            user.setIsAdmin(false);
+
             session.save(user);
 
             transaction.commit();
             session.close();
-            
-            UserController.doLogin(request, response);
+
+            doLogin(request, response);
         } else {
-            response.redirect("/do_signup");
+            response.redirect("/");
         }
 
         return null;

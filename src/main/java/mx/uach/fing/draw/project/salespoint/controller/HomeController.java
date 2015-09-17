@@ -16,9 +16,6 @@
  */
 package mx.uach.fing.draw.project.salespoint.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -27,12 +24,9 @@ import spark.Response;
  *
  * @author Luis Chávez Bustamante
  */
-public class HomeController {
-    
-    public static ModelAndView index(Request request, Response response) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("message", "Hola mundo!");
-        
-        return new ModelAndView(map, "index.ftl");
+public class HomeController extends Controller {
+
+    public ModelAndView index(Request request, Response response) {
+        return new ModelAndView(values(request), "index.ftl");
     }
 }
