@@ -10,7 +10,7 @@
 		<#list errors as error>
 		<div class="alert alert-warning" role="alert">${error}</div>
 		</#list>
-		<h2>Mis Compras</h2>
+		<h2>Mis Compras <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#crearPedido">Crear pedido</button></h2>
 		<p>Tus compras son las siguientes:</p>
 		<table class="table table-striped">
 			<thead>
@@ -26,9 +26,6 @@
 					<td>${order.getOrderId()}</td>
 					<td>${order.getCreatedAt()}</td>
 					<td>${order.getStatus()}</td>
-					<td>
-						<button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#crearPedido">Ver</button>
-					</td>
 				</tr>
 				</#list>
 			</tbody>
