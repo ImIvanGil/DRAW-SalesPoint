@@ -16,10 +16,88 @@
  */
 package mx.uach.fing.draw.project.salespoint.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import mx.uach.fing.draw.project.salespoint.HibernateUtil;
+import mx.uach.fing.draw.project.salespoint.model.SaleOrder;
+import mx.uach.fing.draw.project.salespoint.model.User;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
+
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
+
 /**
- *
+ * 
  * @author Luis Chávez Bustamante
  */
 public class AdminController {
-    
+
+    public static ModelAndView admin(Request request, Response response) {
+        User user = request.session().attribute("user");
+
+        if (!user.getIsAdmin()) {
+            response.redirect("/");
+        }
+
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        List<SaleOrder> orders = session.createCriteria(SaleOrder.class)
+                .list();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("orders", orders);
+
+        return new ModelAndView(map, "admin.ftl");
+    }
+
+    public static Object updateOrderStatus(Request request, Response response) {
+        User user = request.session().attribute("user");
+
+        if (!user.getIsAdmin()) {
+            response.redirect("/");
+        }
+
+        boolean errors = false;
+        Long id = null;
+        String status = request.params("status");
+
+        try {
+            id = Long.valueOf(request.params("id"));
+        } catch (NumberFormatException ex) {
+            errors = true;
+        }
+
+        if ("LIBERAR".equals(status)) {
+            errors = true;
+        }
+
+        if (!errors) {
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            SaleOrder saleOrder = (SaleOrder) session.createCriteria(SaleOrder.class)
+                    .add(Restrictions.eq("order_id", id))
+                    .uniqueResult();
+
+            Transaction transaction = session.beginTransaction();
+
+            saleOrder.setStatus(status);
+            session.update(saleOrder);
+
+            transaction.commit();
+            session.close();
+        }
+
+        response.redirect("/admin");
+
+        return null;
+    }
 }
