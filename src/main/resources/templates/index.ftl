@@ -98,12 +98,12 @@
 						</div>
 						<div class="form-group">        
 							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-default">Crear</button>
+								<button type="submit" class="btn btn-primary">Crear</button>
 							</div>
 						</div>
 					</form>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>
@@ -133,7 +133,7 @@
 						</div>
 						<div class="form-group">        
 							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-default">Iniciar Session</button>
+								<button type="submit" class="btn btn-primary">Iniciar Session</button>
 							</div>
 						</div>
 					</form>
